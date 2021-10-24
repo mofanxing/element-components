@@ -1,0 +1,61 @@
+{
+  "name": "element-components",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons": "^0.0.11",
+    "element-plus": "^1.0.2-beta.63",
+    "tinymce": "5.8.2",
+    "vue": "^3.2.9",
+    "vue-clipboard3": "^1.0.1",
+    "vue-i18n": "^9.1.7",
+    "vue-router": "^4.0.8",
+    "vue-slicksort": "^1.2.0",
+    "vuex": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/js-cookie": "^2.2.6",
+    "@types/node": "^16.4.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "@vitejs/plugin-vue": "^1.3.0",
+    "@vitejs/plugin-vue-jsx": "^1.1.7",
+    "@vue/compiler-sfc": "^3.0.5",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-vue": "^7.14.0",
+    "husky": ">=6",
+    "lint-staged": ">=10",
+    "prettier": "^2.3.2",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-external-globals": "^0.6.1",
+    "sass": "^1.36.0",
+    "sass-loader": "^12.1.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-recess-order": "^2.4.0",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-order": "^4.1.0",
+    "typescript": "^4.3.5",
+    "vite": "^2.4.4",
+    "vue-eslint-parser": "^7.9.0",
+    "vue-tsc": "^0.2.2"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,vue}": "eslint --cache --fix",
+    "*.{scss,vue}": "stylelint --fix",
+    "*.js": "eslint --cache --fix"
+  }
+}
