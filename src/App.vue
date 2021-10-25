@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-	<div>1551</div>
+	
 </template>
 
 <style>
