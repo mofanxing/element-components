@@ -1,8 +1,6 @@
 <script setup></script>
 
-<template>
-	
-</template>
+<template><div>1515</div></template>
 
 <style>
 #app {
