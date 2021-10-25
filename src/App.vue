@@ -1,7 +1,11 @@
-<script setup></script>
-
-<template><div>1515</div></template>
-
+<template>
+	<div style="height: 400px">
+		<EditorText></EditorText>
+	</div>
+</template>
+<script setup lang="ts">
+import EditorText from './components/EditorText/EditorText.vue'
+</script>
 <style>
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
