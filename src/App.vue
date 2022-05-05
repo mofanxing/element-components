@@ -1,7 +1,7 @@
 <template>
 	<div style="height: 400px">
 		<EditorText></EditorText>
-		<MyTable :data="tableData" :options="options"></MyTable>
+		<MyTable></MyTable>
 	</div>
 </template>
 <script setup lang="ts">
