@@ -1,5 +1,11 @@
 <template>
-	<el-table :data="souce" @cell-dblclick="cellDblclick" :border="true" :show-header="false">
+	<el-table
+		:data="souce"
+		@cell-dblclick="cellDblclick"
+		@cell-contextmenu="ellContextmenu"
+		:border="true"
+		:show-header="false"
+	>
 		<template v-for="(item, index) in options" :key="index">
 			<el-table-column :align="item.align" :prop="item.prop">
 				<template #default="scope">
@@ -60,6 +66,11 @@ const cellDblclick = (row, column, cell) => {
 	nextTick(() => {
 		cell.querySelector('input').focus()
 	})
+}
+
+const ellContextmenu = (row, column, cell, event) => {
+	event.preventDefault()
+	console.log(event)
 }
 
 const inputChange = (val, scope) => {
