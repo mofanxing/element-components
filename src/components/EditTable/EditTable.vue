@@ -22,7 +22,6 @@
 </template>
 
 <script lang="ts" setup>
-import { isTemplateNode } from '@vue/compiler-core'
 import { ref, computed, defineProps, PropType } from 'vue'
 
 export interface TableOptions {

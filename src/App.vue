@@ -9,12 +9,16 @@
 
 			<template #myname="{ scope }"> 哈哈 </template>
 		</EditTableVue>
+
+		<MyTable :data="tableData2"></MyTable>
 	</div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import EditorText from './components/EditorText/EditorText.vue'
 import EditTableVue, { TableOptions } from './components/EditTable/EditTable.vue'
+
+import MyTable from './components/MyTable/MyTable.vue'
 
 const tableData = ref([
 	{
@@ -37,6 +41,11 @@ const tableData = ref([
 		name: 'Tom',
 		address: 'No. 189, Grove St, Los Angeles',
 	},
+])
+
+const tableData2 = ref([
+	['2016-05-04', '测试', 'Tom', 'No. 189, Grove St, Los Angeles'],
+	['2016-05-05', '测试', 'Tom2', 'No. 189, Grove St, Los Angeles'],
 ])
 
 let options: TableOptions[] = [

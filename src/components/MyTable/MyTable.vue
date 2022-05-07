@@ -1,104 +1,66 @@
 <template>
-	<table class="editTable" ref="editTable">
-		<!-- <div class="editTable-colmun" v-for="(item, index) in tableData" :key="index">
-			<div class="editTable-cell" v-for="(itemCell, indexCell) in item" :key="indexCell">
-				<div class="editTable-text">{{ itemCell }}</div>
-				<el-input v-model="item[indexCell]"></el-input>
-			</div>
-		</div> -->
-		<tr v-for="(item, index) in tableData" :key="index">
-			<td @dblclick="editEvent" v-for="(itemCell, indexCell) in item" :key="indexCell">
-				<div class="editTable-text">{{ itemCell }}</div>
-				<el-input @blur="saveEvent" v-model="item[indexCell]"></el-input>
-			</td>
-		</tr>
-	</table>
-	<button @click="insert">插入数据</button>
+	<el-table :data="souce" @cell-dblclick="cellDblclick">
+		<template v-for="(item, index) in options" :key="index">
+			<el-table-column :align="item.align" :prop="item.prop">
+				<template #default="scope">
+					<div class="text" v-if="!scope.row[scope.column.property].showInput">
+						{{ scope.row[scope.column.property].value }}
+					</div>
+					<el-input
+						ref="editInput"
+						v-else
+						v-model="scope.row[scope.column.property].value"
+						@blur="scope.row[scope.column.property].showInput = false"
+					></el-input>
+				</template>
+			</el-table-column>
+		</template>
+	</el-table>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, defineProps, PropType, nextTick } from 'vue'
 
-const editTable = ref()
-const tableData = ref([
-	['测试数据', '测试数据2', '测试数据3'],
-	['测试数据4', '测试数据5', '测试数据6'],
-	['测试数据7', '测试数据8', '测试数据9'],
-])
+export interface TableOptions {
+	prop?: string
+	width?: string | number
+	align?: 'left' | 'center' | 'right'
+}
 
-let oldNode = null
-const editEvent = (event) => {
-	event.stopPropagation()
-	if (oldNode !== null) {
-		oldNode.className = ''
+const prop = defineProps({
+	data: {
+		type: Array as PropType<any[]>,
+		required: true,
+	},
+})
+
+let options = ref<TableOptions[]>([])
+
+let souce = ref([])
+prop.data.forEach((item) => {
+	let souceObj = {}
+
+	item.forEach((i, index) => {
+		souceObj[`col_${index}`] = { value: i, showInput: false }
+	})
+	souce.value.push(souceObj)
+})
+for (let key in souce.value[0]) {
+	let optionsObj: TableOptions = {
+		align: 'center',
+		prop: '',
 	}
-	let dom = event.target
-	dom.parentNode.className = 'isEdit'
-	dom.parentNode.querySelector('.el-input__inner').focus()
-	oldNode = dom.parentNode
+	optionsObj.prop = key
+	options.value.push(optionsObj)
 }
 
-const saveEvent = (event) => {
-	event.stopPropagation()
-	console.log(event)
-	let dom = event.target
-	dom.parentNode.parentNode.className = ''
-}
-
-const insert = () => {
-	tableData.value.push(['测试数据7', '测试数据8', '测试数据9'])
-}
-
-const initWidth = () => {
-	let len = tableData.value[0].length
-	console.log(editTable.value.querySelectorAll('td'))
-	editTable.value.querySelectorAll('td').forEach((item) => {
-		item.style.width = `${editTable.value.offsetWidth / len}px `
+const cellDblclick = (row, column, cell, event) => {
+	console.log(row, column, cell, event)
+	row[column.property].showInput = true
+	nextTick(() => {
+		cell.querySelector('input').focus()
 	})
 }
-onMounted(() => {
-	initWidth()
-})
 </script>
 
-<style scoped lang="scss">
-.editTable {
-	width: 100%;
-	margin-top: 40px;
-	border-collapse: collapse;
-
-	tr {
-		height: 50px;
-		td {
-			&.isEdit {
-				.editTable-text {
-					display: none;
-				}
-				.el-input {
-					display: block;
-				}
-			}
-			padding: 8px;
-			line-height: 23px;
-			box-sizing: border-box;
-			text-align: center;
-			border: 1px solid #ebeef5;
-			&:hover {
-				background-color: #f5f7fa;
-				/* border-color: #409eff; */
-				cursor: pointer;
-			}
-
-			.editTable-text {
-				display: block;
-			}
-			.el-input {
-				display: none;
-				.el-input__inner {
-					text-align: center;
-				}
-			}
-		}
-	}
-}
-</style>
+<style scoped lang="scss"></style>
