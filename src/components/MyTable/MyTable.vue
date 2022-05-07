@@ -1,5 +1,5 @@
 <template>
-	<el-table :data="souce" @cell-dblclick="cellDblclick">
+	<el-table :data="souce" @cell-dblclick="cellDblclick" :border="true" :show-header="false">
 		<template v-for="(item, index) in options" :key="index">
 			<el-table-column :align="item.align" :prop="item.prop">
 				<template #default="scope">
@@ -7,10 +7,10 @@
 						{{ scope.row[scope.column.property].value }}
 					</div>
 					<el-input
-						ref="editInput"
 						v-else
 						v-model="scope.row[scope.column.property].value"
 						@blur="scope.row[scope.column.property].showInput = false"
+						@change="inputChange($event, scope)"
 					></el-input>
 				</template>
 			</el-table-column>
@@ -19,13 +19,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, PropType, nextTick } from 'vue'
+import { ref, defineProps, PropType, nextTick, defineEmits } from 'vue'
 
 export interface TableOptions {
 	prop?: string
 	width?: string | number
 	align?: 'left' | 'center' | 'right'
 }
+
+const emits = defineEmits(['valueUpdate'])
 
 const prop = defineProps({
 	data: {
@@ -39,7 +41,6 @@ let options = ref<TableOptions[]>([])
 let souce = ref([])
 prop.data.forEach((item) => {
 	let souceObj = {}
-
 	item.forEach((i, index) => {
 		souceObj[`col_${index}`] = { value: i, showInput: false }
 	})
@@ -54,12 +55,15 @@ for (let key in souce.value[0]) {
 	options.value.push(optionsObj)
 }
 
-const cellDblclick = (row, column, cell, event) => {
-	console.log(row, column, cell, event)
+const cellDblclick = (row, column, cell) => {
 	row[column.property].showInput = true
 	nextTick(() => {
 		cell.querySelector('input').focus()
 	})
+}
+
+const inputChange = (val, scope) => {
+	emits('valueUpdate', val, scope.$index, scope.column.rawColumnKey)
 }
 </script>
 

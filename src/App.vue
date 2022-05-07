@@ -1,16 +1,17 @@
 <template>
 	<div style="height: 400px">
 		<EditorText></EditorText>
-		<EditTableVue :data="tableData" :options="options">
+		<!-- <EditTableVue :data="tableData" :options="options">
 			<template #action="{ scope }">
 				<el-button size="small" type="primary" @click="edit(scope)">编辑</el-button>
 				<el-button size="small" type="danger">删除</el-button>
 			</template>
 
 			<template #myname="{ scope }"> 哈哈 </template>
-		</EditTableVue>
+		</EditTableVue> -->
 
-		<MyTable :data="tableData2"></MyTable>
+		<div class="lin"></div>
+		<MyTable :data="tableData2" @value-update="valeUpdate"></MyTable>
 	</div>
 </template>
 <script setup lang="ts">
@@ -44,9 +45,15 @@ const tableData = ref([
 ])
 
 const tableData2 = ref([
-	['2016-05-04', '测试', 'Tom', 'No. 189, Grove St, Los Angeles'],
-	['2016-05-05', '测试', 'Tom2', 'No. 189, Grove St, Los Angeles'],
+	['2016-05-04', '测试', 'Tom', '', 'No. 189, Grove St, Los Angeles'],
+	['2016-05-05', '测试', 'Tom2', '', 'No. 189, Grove St, Los Angeles'],
+	['', '', '', '', ''],
 ])
+
+const valeUpdate = (newVal, index, columnIndex) => {
+	tableData2.value[index][columnIndex] = newVal
+	console.log(tableData2.value)
+}
 
 let options: TableOptions[] = [
 	{
@@ -81,5 +88,9 @@ const edit = (scope: any) => {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	padding: 20px;
+}
+.lin {
+	margin-bottom: 40px;
 }
 </style>
