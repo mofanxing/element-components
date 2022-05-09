@@ -12,17 +12,6 @@
 
 		<div class="lin"></div>
 		<MyTable :data="tableData2" @value-update="valeUpdate"></MyTable>
-
-		<div class="myMun">
-			<el-menu>
-				<el-menu-item index="1-1">删除当前行</el-menu-item>
-				<el-menu-item index="2-1">删除当前列</el-menu-item>
-				<!-- <el-menu-item>前方插入一列</el-menu-item>
-				<el-menu-item>前方插入一行</el-menu-item>
-				<el-menu-item>后方插入一列</el-menu-item>
-				<el-menu-item>后方插入一行</el-menu-item> -->
-			</el-menu>
-		</div>
 	</div>
 </template>
 <script setup lang="ts">
@@ -103,9 +92,5 @@ const edit = (scope: any) => {
 }
 .lin {
 	margin-bottom: 40px;
-}
-.myMun {
-	margin-top: 40px;
-	width: 250px;
 }
 </style>
