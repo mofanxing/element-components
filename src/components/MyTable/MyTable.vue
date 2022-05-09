@@ -3,9 +3,9 @@
 		<el-table
 			:data="souce"
 			@cell-dblclick="cellDblclick"
-			@cell-contextmenu="ellContextmenu"
 			:border="true"
 			:show-header="false"
+			@cell-contextmenu="ellContextmenu"
 		>
 			<template v-for="(item, index) in options" :key="index">
 				<el-table-column :align="item.align" :prop="item.prop">
@@ -23,15 +23,15 @@
 				</el-table-column>
 			</template>
 		</el-table>
-
 		<div class="myMun" ref="myMun">
 			<el-menu active-text-color="#000000">
-				<el-menu-item index="1-1">删除当前行</el-menu-item>
-				<el-menu-item index="2-1">删除当前列</el-menu-item>
-				<!-- <el-menu-item>前方插入一列</el-menu-item>
-				<el-menu-item>前方插入一行</el-menu-item>
-				<el-menu-item>后方插入一列</el-menu-item>
-				<el-menu-item>后方插入一行</el-menu-item> -->
+				<el-menu-item
+					v-for="(itemMun, indexMun) in eventList"
+					:key="indexMun"
+					:index="String(indexMun)"
+					@click="menuClick($event, itemMun.event)"
+					>{{ itemMun.text }}</el-menu-item
+				>
 			</el-menu>
 		</div>
 	</div>
@@ -46,7 +46,7 @@ export interface TableOptions {
 	align?: 'left' | 'center' | 'right'
 }
 const myMun = ref()
-const emits = defineEmits(['valueUpdate'])
+const emits = defineEmits(['valueUpdate', 'eventTarget'])
 
 const prop = defineProps({
 	data: {
@@ -81,11 +81,12 @@ const cellDblclick = (row, column, cell) => {
 	})
 }
 
+let currentEventIndex = []
 const ellContextmenu = (row, column, cell, event) => {
 	event.preventDefault()
+	console.log(column)
+	// currentEventIndex = [scope.$index, scope.column.rawColumnKey]
 	myMun.value.style = `visibility: visible;transform: translate(${event.clientX}px, ${event.clientY}px);`
-
-	console.log(event, myMun.value)
 }
 
 const inputChange = (val, scope) => {
@@ -94,6 +95,37 @@ const inputChange = (val, scope) => {
 document.addEventListener('click', function () {
 	myMun.value.style = `visibility: hidden;`
 })
+
+const eventList = [
+	{
+		text: '删除当前行',
+		event: 'deleteRow',
+	},
+	{
+		text: '删除当前列',
+		event: 'deleteColumn',
+	},
+	{
+		text: '前方插入一列',
+		event: 'insertBeforColumn',
+	},
+	{
+		text: '前方插入一行',
+		event: 'insertBeforeRow',
+	},
+	{
+		text: '后方插入一列',
+		event: 'insertAfterColumn',
+	},
+	{
+		text: '后方插入一行',
+		event: 'insertAfterRow',
+	},
+]
+
+const menuClick = ($event, eventText: string) => {
+	emits('eventTarget', eventText, currentEventIndex[0], currentEventIndex[1])
+}
 </script>
 
 <style scoped lang="scss">

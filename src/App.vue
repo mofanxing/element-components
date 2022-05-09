@@ -11,7 +11,7 @@
 		</EditTableVue> -->
 
 		<div class="lin"></div>
-		<MyTable :data="tableData2" @value-update="valeUpdate"></MyTable>
+		<MyTable :data="tableData2" @value-update="valeUpdate" @event-target="eventTarget"></MyTable>
 	</div>
 </template>
 <script setup lang="ts">
@@ -55,6 +55,9 @@ const valeUpdate = (newVal, index, columnIndex) => {
 	console.log(tableData2.value)
 }
 
+const eventTarget = (eventText, index, columnIndex) => {
+	console.log(eventText, index, columnIndex)
+}
 let options: TableOptions[] = [
 	{
 		label: '日期',
