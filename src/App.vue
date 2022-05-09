@@ -12,6 +12,11 @@
 
 		<div class="lin"></div>
 		<MyTable :data="tableData2" @value-update="valeUpdate" @event-target="eventTarget"></MyTable>
+		<CustomTable
+			:data="tableData2"
+			@value-update="valeUpdate"
+			@event-target="eventTarget"
+		></CustomTable>
 	</div>
 </template>
 <script setup lang="ts">
@@ -20,6 +25,7 @@ import EditorText from './components/EditorText/EditorText.vue'
 import EditTableVue, { TableOptions } from './components/EditTable/EditTable.vue'
 
 import MyTable from './components/MyTable/MyTable.vue'
+import CustomTable from './components/CustomTable/CustomTable.vue'
 
 const tableData = ref([
 	{
