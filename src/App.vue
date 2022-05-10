@@ -11,7 +11,7 @@
 		</EditTableVue> -->
 
 		<div class="lin"></div>
-		<MyTable :data="tableData2" @value-update="valeUpdate" @event-target="eventTarget"></MyTable>
+		<!-- <MyTable :data="tableData2" @value-update="valeUpdate" @event-target="eventTarget"></MyTable> -->
 		<CustomTable
 			:data="tableData2"
 			@value-update="valeUpdate"
@@ -20,9 +20,9 @@
 	</div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import EditorText from './components/EditorText/EditorText.vue'
-import EditTableVue, { TableOptions } from './components/EditTable/EditTable.vue'
+// import EditTableVue, { TableOptions } from './components/EditTable/EditTable.vue'
 
 import MyTable from './components/MyTable/MyTable.vue'
 import CustomTable from './components/CustomTable/CustomTable.vue'
@@ -58,11 +58,10 @@ const tableData2 = ref([
 
 const valeUpdate = (newVal, index, columnIndex) => {
 	tableData2.value[index][columnIndex] = newVal
-	console.log(tableData2.value)
 }
 
-const eventTarget = (eventText, index, columnIndex) => {
-	console.log(eventText, index, columnIndex)
+const eventTarget = (eventText, index, columnIndex, editEvent) => {
+	editEvent[eventText](tableData2.value, Number(index), Number(columnIndex))
 }
 let options: TableOptions[] = [
 	{

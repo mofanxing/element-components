@@ -33,12 +33,39 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, PropType, nextTick, defineEmits } from 'vue'
+import { ref, defineProps, PropType, nextTick, defineEmits, watch, watchEffect } from 'vue'
 
 export interface TableOptions {
 	prop?: string
 	width?: string | number
 	align?: 'left' | 'center' | 'right'
+}
+
+const editEvent = {
+	deleteRow: (data: any[], index, columnIndex) => {
+		data.splice(index, 1)
+	},
+	deleteColumn: (data: any[], index, columnIndex) => {
+		data.forEach((item) => {
+			item.splice(columnIndex, 1)
+		})
+	},
+	insertBeforColumn: (data: any[], index, columnIndex) => {
+		data.forEach((item) => {
+			item.splice(columnIndex, 0, '')
+		})
+	},
+	insertBeforeRow: (data: any[], index, columnIndex) => {
+		data.splice(index, 0, Array.from(data[0].map(() => '')))
+	},
+	insertAfterColumn: (data: any[], index, columnIndex) => {
+		data.forEach((item) => {
+			item.splice(columnIndex + 1, 0, '')
+		})
+	},
+	insertAfterRow: (data: any[], index, columnIndex) => {
+		data.splice(index + 1, 0, Array.from(data[0].map(() => '')))
+	},
 }
 const myMun = ref()
 const emits = defineEmits(['valueUpdate', 'eventTarget'])
@@ -53,21 +80,6 @@ const prop = defineProps({
 let options = ref<TableOptions[]>([])
 
 let souce = ref([])
-prop.data.forEach((item) => {
-	let souceObj = {}
-	item.forEach((i, index) => {
-		souceObj[`col_${index}`] = { value: i, showInput: false }
-	})
-	souce.value.push(souceObj)
-})
-for (let key in souce.value[0]) {
-	let optionsObj: TableOptions = {
-		align: 'center',
-		prop: '',
-	}
-	optionsObj.prop = key
-	options.value.push(optionsObj)
-}
 
 const cellDblclick = (event, item) => {
 	let td = event.target.parentNode
@@ -76,7 +88,6 @@ const cellDblclick = (event, item) => {
 		td.querySelector('input').focus()
 	})
 }
-console.log(souce.value)
 
 let currentEventIndex = []
 const ellContextmenu = (event, index, columnIndex) => {
@@ -120,8 +131,32 @@ const eventList = [
 ]
 
 const menuClick = ($event, eventText: string) => {
-	emits('eventTarget', eventText, currentEventIndex[0], currentEventIndex[1])
+	emits('eventTarget', eventText, currentEventIndex[0], currentEventIndex[1], editEvent)
 }
+
+watch(
+	prop.data,
+	(newVal: any[]) => {
+		souce.value = []
+		options.value = []
+		newVal.forEach((item) => {
+			let souceObj = {}
+			item.forEach((i, index) => {
+				souceObj[`col_${index}`] = { value: i, showInput: false }
+			})
+			souce.value.push(souceObj)
+		})
+		for (let key in souce.value[0]) {
+			let optionsObj: TableOptions = {
+				align: 'center',
+				prop: '',
+			}
+			optionsObj.prop = key
+			options.value.push(optionsObj)
+		}
+	},
+	{ immediate: true }
+)
 </script>
 
 <style scoped lang="scss">
