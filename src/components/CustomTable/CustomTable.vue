@@ -33,7 +33,7 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, PropType, nextTick, defineEmits, watch, watchEffect } from 'vue'
+import { ref, defineProps, PropType, nextTick, defineEmits, watch } from 'vue'
 
 export interface TableOptions {
 	prop?: string
