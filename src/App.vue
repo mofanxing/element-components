@@ -17,6 +17,10 @@
 			@value-update="valeUpdate"
 			@event-target="eventTarget"
 		></CustomTable>
+
+		<div class="grid">
+			<div class="item" v-for="index in 6" :key="index">{{ index }}</div>
+		</div>
 	</div>
 </template>
 <script setup lang="ts">
@@ -91,7 +95,7 @@ const edit = (scope: any) => {
 	console.log(scope)
 }
 </script>
-<style>
+<style lang="scss">
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -100,5 +104,13 @@ const edit = (scope: any) => {
 }
 .lin {
 	margin-bottom: 40px;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: 100px 100px;
+	grid-template-rows: 100px 100px;
+	.item {
+	}
 }
 </style>
