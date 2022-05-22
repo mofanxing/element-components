@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, defineProps, PropType } from 'vue'
+import { computed, defineProps, PropType } from 'vue'
 
 export interface TableOptions {
 	prop?: string
