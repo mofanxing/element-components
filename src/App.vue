@@ -1,5 +1,5 @@
 <template>
-	<div style="height: 400px">
+	<div>
 		<el-dialog title="ces" v-model="show">
 			<div class="box">
 				<EditorText v-if="a === 1"></EditorText>
@@ -16,7 +16,7 @@
 import { ref } from 'vue'
 import EditorText from './components/EditorText/EditorText.vue'
 const a = ref(1)
-const show = ref(true)
+const show = ref(false)
 </script>
 <style lang="scss">
 #app {
