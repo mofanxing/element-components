@@ -10,13 +10,21 @@
 		<el-button @click="a = 2">2</el-button>
 		<el-button @click="a = 1">1</el-button>
 		<div class="lin"></div>
+		{{ time }}
 	</div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import EditorText from './components/EditorText/EditorText.vue'
+import { countDown } from './tools/down.js'
 const a = ref(1)
 const show = ref(false)
+let startTime = new Date().getTime()
+let endTime = startTime + 700000
+let time = ref('')
+setInterval(() => {
+	time.value = countDown(startTime, endTime)
+}, 1000)
 </script>
 <style lang="scss">
 #app {
