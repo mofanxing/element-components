@@ -25,10 +25,14 @@ const getList = async () => {
 getList()
 
 const layoutItem = () => {
-	let ele = container.value.querySelectorAll('.item')
-	console.log(container.value.querySelectorAll('item'))
+	let clientWidth = document.documentElement.clientWidth / 200
+	let itemWidth = container.value
+	console.log(itemWidth)
+	// container.value.style.width =
 }
-onMounted(() => {})
+onMounted(() => {
+	layoutItem()
+})
 watch(
 	() => showList.value,
 	() => {
@@ -45,16 +49,16 @@ watch(
 	.container {
 		margin: 0 auto;
 		position: relative;
-
 		overflow: hidden;
 		.item {
 			width: 200px;
-			border-radius: 20px;
-			margin: 20px 0 0 20px;
+
+			padding: 12px;
 			float: left;
-			overflow: hidden;
+			box-sizing: border-box;
 			img {
 				width: 100%;
+				border-radius: 12px;
 			}
 		}
 	}
