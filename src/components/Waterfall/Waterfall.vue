@@ -55,6 +55,7 @@ const layoutItem = () => {
 			heightArr.value[minIndex] = minHeight + itemArr.value[i].offsetHeight
 		}
 	}
+	container.value.style.height = Math.max(...heightArr.value) + 'px'
 }
 </script>
 
@@ -63,11 +64,11 @@ const layoutItem = () => {
 	width: 100vw;
 	height: 100vh;
 	background-color: #352c2e;
+	overflow-y: scroll;
 	.container {
 		position: relative;
-		height: 100%;
 		margin: 0 auto;
-		overflow-y: scroll;
+
 		.item {
 			width: 200px;
 			padding: 12px;
